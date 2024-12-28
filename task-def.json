@@ -1,5 +1,5 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:774305607662:task-definition/php-deploy:1",
+  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:774305607662:task-definition/php-deploy:2",
   "containerDefinitions": [
     {
       "name": "course-app",
@@ -36,9 +36,10 @@
     }
   ],
   "family": "php-deploy",
+  "taskRoleArn": "arn:aws:iam::774305607662:role/ecsTaskExecutionRole",
   "executionRoleArn": "arn:aws:iam::774305607662:role/ecsTaskExecutionRole",
   "networkMode": "awsvpc",
-  "revision": 1,
+  "revision": 2,
   "volumes": [],
   "status": "ACTIVE",
   "requiresAttributes": [
@@ -56,6 +57,9 @@
     },
     {
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.28"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
     },
     {
       "name": "ecs.capability.execution-role-ecr-pull"
@@ -84,7 +88,7 @@
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
   },
-  "registeredAt": "2024-12-28T01:16:58.585Z",
+  "registeredAt": "2024-12-28T02:45:57.884Z",
   "registeredBy": "arn:aws:iam::774305607662:root",
   "tags": []
 }
