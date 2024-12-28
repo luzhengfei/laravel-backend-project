@@ -75,7 +75,8 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
           # 环境变量文件存储在私有 S3 中
-          env-files: s3://backend-env-v001/${{ env.APP_NAME }}.env
+          env-files: |
+            s3://backend-env-v001/${{ env.APP_NAME }}.env
       # 部署
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
