@@ -11,12 +11,8 @@ RUN apt-get update && apt-get install -y \
                                                 && docker-php-ext-install pdo pdo_mysql mysqli \
                                                 && docker-php-ext-enable pdo pdo_mysql mysqli
 
-#RUN apt-get update && apt-get install -y \
-#    nginx \
-#    vim
-
 # 安装 Composer（PHP 包管理器）
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+#RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # 创建日志目录
 RUN mkdir -p /var/log/php-fpm && mkdir -p /var/log/php
@@ -25,7 +21,7 @@ RUN mkdir -p /var/log/php-fpm && mkdir -p /var/log/php
 WORKDIR /var/www/html
 
 # 复制 PHP 项目代码到容器中
-COPY . .
+COPY ./app ./app
 
 # 复制 nginx, php, php-fpm 配置文件
 COPY nginx.conf /etc/nginx/nginx.conf
