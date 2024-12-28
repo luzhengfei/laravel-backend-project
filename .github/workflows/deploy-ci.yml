@@ -4,18 +4,23 @@ on:
     branches:
       - main  # 监控main分支的推送
 env:
+  APP_NAME: ${{ secrets.APP_NAME }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: ${{ secrets.AWS_REGION }}
+  #AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}           # set this to your Amazon ECR repository name
   ECS_SERVICE: ${{ secrets.ECS_SERVICE }}                 # set this to your Amazon ECS service name
   ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }}
+  #ECS_TASK_DEFINITION_NAME: ${{ secrets.ECS_TASK_DEFINITION_NAME }}
+  #ECS_TASK_DEFINITION_VER: ${{ secrets.ECS_TASK_DEFINITION_VER }}
   CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 10 # 设置作业的超时时间为 10 分钟
     environment: production
 
     steps:
@@ -61,7 +66,7 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-      # 使用AWS 任务定义 创建容器
+      # 任务定义中使用最新的镜像ID
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -69,12 +74,14 @@ jobs:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
+          # 环境变量文件存储在私有 S3 中
+          env-files: s3://backend-env-v001/${{ env.APP_NAME }}.env
       # 部署
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
+          #task-definition: arn:aws:ecs:${{ env.AWS_REGION }}:<aws_account_id>:task-definition/<task_definition_name>:<revision_number>
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
-
