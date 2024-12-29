@@ -1,15 +1,21 @@
 # 使用官方 PHP 镜像，带 FPM 支持
 FROM php:8.4.2-fpm
 
+# 设置时区变量
+ENV TZ=Asia/Tokyo
+
 # 安装 nginx 和其他必要工具
 RUN apt-get update && apt-get install -y \
+    tzdata \
     nginx \
     vim \
     curl \
     unzip \
     && docker-php-ext-install pdo pdo_mysql && apt-get install -y libmariadb-dev \
                                                 && docker-php-ext-install pdo pdo_mysql mysqli \
-                                                && docker-php-ext-enable pdo pdo_mysql mysqli
+                                                && docker-php-ext-enable pdo pdo_mysql mysqli \
+    && ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
+        dpkg-reconfigure -f noninteractive tzdata
 
 
 # 安装 Composer（PHP 包管理器）
