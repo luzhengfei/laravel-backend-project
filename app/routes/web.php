@@ -11,7 +11,7 @@ Route::get('/', function () {
 
 Route::get('/greeting', function () {
     // 写入一条错误日志
-    Log::error('This is an error message');
+    Log::error('systerm error', ['message' => 'username and password is empty', 'code' => 100010]);
 });
 
 Route::get('/trigger_php_log', function () {
@@ -21,4 +21,8 @@ Route::get('/trigger_php_log', function () {
     error_log($message);
     // 写入一条错误日志
     Log::error('This is an error message');
+});
+
+Route::get('/trigger-error', function () {
+    abort(500, 'Intentional server error.');
 });
