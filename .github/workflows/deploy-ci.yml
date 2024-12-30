@@ -10,5 +10,5 @@ jobs:
     with:
       # 应用名称
       APP_NAME: laravel-backend-project
-      # 指定PHP镜像版本，目前实时编译最新的.
+      # 指定PHP镜像版本，目前实时编译最新的
       #IMAGE_NAME : prod-php8.4-v1
