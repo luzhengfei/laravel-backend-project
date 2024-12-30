@@ -1,14 +1,4 @@
 name: PHP CI/CD
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-    types:
-      - closed
-
 jobs:
   Deploy:
     uses: luzhengfei/devops/.github/workflows/deploy-php.yml@main
