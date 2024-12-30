@@ -21,4 +21,4 @@ jobs:
   deploy:
     uses: luzhengfei/devops/.github/workflows/deploy-php.yml@main
     with:
-      caller_repo: luzhengfei/laravel-backend-project
+      APP_NAME: laravel-backend-project
