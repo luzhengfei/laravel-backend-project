@@ -12,3 +12,13 @@ jobs:
       APP_NAME: laravel-backend-project
       # 指定PHP镜像版本，目前实时编译最新的
       #IMAGE_NAME : prod-php8.4-v1
+
+      # AWS 配置
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # 邮件配置
+      EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      OWNER_EMAIL: 981864142@qq.com
+
