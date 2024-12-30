@@ -4,6 +4,10 @@ on:
     branches:
       - main  # 监控main分支的推送
 
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 jobs:
   Deploy:
     uses: luzhengfei/devops/.github/workflows/deploy-php.yml@main
@@ -14,8 +18,8 @@ jobs:
       #IMAGE_NAME : prod-php8.4-v1
 
       # AWS 配置
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
 
       # 邮件配置
       EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
