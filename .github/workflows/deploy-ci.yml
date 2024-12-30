@@ -11,7 +11,7 @@ env:
 jobs:
   Deploy:
     uses: luzhengfei/devops/.github/workflows/deploy-php.yml@main
-    with:
+    inputs:
       # 应用名称
       APP_NAME: laravel-backend-project
       # 指定PHP镜像版本，目前实时编译最新的
