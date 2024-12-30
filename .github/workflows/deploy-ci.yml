@@ -18,7 +18,7 @@ env:
   CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
 
 jobs:
-  deploy:
+  Deploy:
     uses: luzhengfei/devops/.github/workflows/deploy-php.yml@main
     with:
       APP_NAME: laravel-backend-project
